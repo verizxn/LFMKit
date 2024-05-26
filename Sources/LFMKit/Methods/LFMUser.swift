@@ -13,34 +13,28 @@ public struct LFMUser: LFMClass {
         self.handler = handler
     }
     
-    public func getInfo(username: String, success: @escaping (LFMResponseUser) -> Void, error: @escaping (Int, String) -> Void) {
+    public func getInfo(username: String, success: @escaping (LFMResponseUser) -> Void, error: ((Int, String) -> Void)? = nil) {
         handler.request(method: "user.getinfo", parameters: ["username": username], success: { response in
             if let user = response.user {
                 success(user)
             }
-        }, error: { n, d in
-            error(n, d)
-        })
+        }, error: error)
     }
     
-    public func getRecentTracks(username: String, limit: Int, success: @escaping ([LFMResponseTrack]) -> Void, error: @escaping (Int, String) -> Void) {
-        handler.request(method: "user.getrecenttracks", parameters: ["user": username, "limit": limit]) { response in
+    public func getRecentTracks(username: String, limit: Int, success: @escaping ([LFMResponseTrack]) -> Void, error: ((Int, String) -> Void)? = nil) {
+        handler.request(method: "user.getrecenttracks", parameters: ["user": username, "limit": limit], success: { response in
             if let recenttracks = response.recenttracks {
                 success(recenttracks.track)
             }
-        } error: { n, d in
-            error(n, d)
-        }
+        }, error: error)
     }
     
-    public func getFriends(username: String, success: @escaping ([LFMResponseUser]) -> Void, error: @escaping (Int, String) -> Void){
-        handler.request(method: "user.getfriends", parameters: ["user": username]) { response in
+    public func getFriends(username: String, success: @escaping ([LFMResponseUser]) -> Void, error: ((Int, String) -> Void)? = nil){
+        handler.request(method: "user.getfriends", parameters: ["user": username], success: { response in
             if let friends = response.friends {
                 success(friends.user)
             }
-        } error: { n, d in
-            error(n, d)
-        }
+        }, error: error)
 
     }
     

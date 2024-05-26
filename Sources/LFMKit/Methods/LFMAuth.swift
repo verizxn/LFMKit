@@ -19,14 +19,12 @@ public struct LFMAuth: LFMClass {
         return URL(string: "https://www.last.fm/api/auth?api_key=\(self.handler.api_key!)&cb=\(callback.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)")!
     }
     
-    public func getSession(token: String, success: @escaping (LFMResponseSession) -> Void, error: @escaping (Int, String) -> Void){
+    public func getSession(token: String, success: @escaping (LFMResponseSession) -> Void, error: ((Int, String) -> Void)? = nil){
         handler.request(method: "auth.getsession", parameters: ["token": token], success: { response in
             if let session = response.session {
                 success(session)
             }
-        }, error: { n, d in
-            error(n, d)
-        }, requiresSignature: true)
+        }, error: error, requiresSignature: true)
     }
     
 }
