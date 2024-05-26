@@ -1,0 +1,6 @@
+.build/
+.swiftpm/
+.vscode/
+.DS_Store
+Package.resolved
+Tests/LFMKitTests/LFMKitTests.swift
