@@ -13,7 +13,7 @@ public struct LFMTrack: LFMClass {
         self.handler = handler
     }
     
-    public func getInfo(track: String, artist: String, username: String? = nil, success: @escaping (LFMResponseTrackFull) -> Void, error: ((Int, String) -> Void)? = nil){
+    public func getInfo(track: String, artist: String, username: String? = nil, success: @escaping (LFMResponseTrackFull) -> Void, error: ((LFMError) -> Void)? = nil){
         var params = ["track": track, "artist": artist]
         if let user = username {
             params["username"] = user
@@ -26,7 +26,7 @@ public struct LFMTrack: LFMClass {
         }, error: error)
     }
     
-    public func getInfo(mbid: String, username: String? = nil, success: @escaping (LFMResponseTrackFull) -> Void, error: ((Int, String) -> Void)? = nil){
+    public func getInfo(mbid: String, username: String? = nil, success: @escaping (LFMResponseTrackFull) -> Void, error: ((LFMError) -> Void)? = nil){
         var params = ["mbid": mbid]
         if let user = username {
             params["username"] = user
@@ -39,7 +39,7 @@ public struct LFMTrack: LFMClass {
         }, error: error)
     }
     
-    public func search(track: String, artist: String, limit: Int, success: @escaping (LFMResponseTrackResults) -> Void, error: ((Int, String) -> Void)? = nil){
+    public func search(track: String, artist: String, limit: Int, success: @escaping (LFMResponseTrackResults) -> Void, error: ((LFMError) -> Void)? = nil){
         handler.request(method: "track.search", parameters: ["track": track, "artist": artist, "limit": limit], success: { response in
             if let results = response.results {
                 success(results)
@@ -47,7 +47,7 @@ public struct LFMTrack: LFMClass {
         }, error: error)
     }
     
-    public func search(query: String, limit: Int, success: @escaping (LFMResponseTrackResults) -> Void, error: ((Int, String) -> Void)? = nil){
+    public func search(query: String, limit: Int, success: @escaping (LFMResponseTrackResults) -> Void, error: ((LFMError) -> Void)? = nil){
         handler.request(method: "track.search", parameters: ["track": query, "limit": limit], success: { response in
             if let results = response.results {
                 success(results)
@@ -55,25 +55,25 @@ public struct LFMTrack: LFMClass {
         }, error: error)
     }
     
-    public func updateNowPlaying(artist: String, track: String, album: String, success: @escaping () -> Void, error: ((Int, String) -> Void)? = nil){
+    public func updateNowPlaying(artist: String, track: String, album: String, success: @escaping () -> Void, error: ((LFMError) -> Void)? = nil){
         handler.request(method: "track.updatenowplaying", parameters: ["artist": artist, "track": track, "album": album, "sk": session.key], success: { _ in
             success()
         }, error: error, requiresSignature: true, type: .post)
     }
     
-    public func updateNowPlaying(mbid: String, success: @escaping () -> Void, error: ((Int, String) -> Void)? = nil){
+    public func updateNowPlaying(mbid: String, success: @escaping () -> Void, error: ((LFMError) -> Void)? = nil){
         handler.request(method: "track.updatenowplaying", parameters: ["mbid": mbid, "sk": session.key], success: { _ in
             success()
         }, error: error, requiresSignature: true, type: .post)
     }
     
-    public func scrobble(artist: String, track: String, timestamp: Double, album: String, album_artist: String?, success: @escaping () -> Void, error: ((Int, String) -> Void)? = nil){
+    public func scrobble(artist: String, track: String, timestamp: Double, album: String, album_artist: String?, success: @escaping () -> Void, error: ((LFMError) -> Void)? = nil){
         handler.request(method: "track.scrobble", parameters: ["artist": artist, "track": track, "timestamp": timestamp, "album": album, "albumArtist": album_artist ?? artist, "sk": session.key], success: { response in
             success()
         }, error: error, requiresSignature: true, type: .post)
     }
     
-    public func scrobble(mbid: String, success: @escaping () -> Void, error: ((Int, String) -> Void)? = nil){
+    public func scrobble(mbid: String, success: @escaping () -> Void, error: ((LFMError) -> Void)? = nil){
         handler.request(method: "track.scrobble", parameters: ["mbid": mbid, "sk": session.key], success: { response in
             success()
         }, error: error, requiresSignature: true, type: .post)

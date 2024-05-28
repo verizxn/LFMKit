@@ -11,11 +11,11 @@ import LFMKit
 final class LFMKitTests: XCTestCase {
     private let username = "YOUR_USERNAME"
     private var api = LFMKitAPI(api_key: "API_KEY", api_secret: "API_SECRET")
-    private let error_callback: (Int, String) -> Void = { _, d in
-        print("\nERROR: \(d)\n")
+    private let error_callback: (LFMError) -> Void = { error in
+        print("\nERROR: \(error.message)\n")
     }
     
-    /*func testUser() throws {
+    func testUser() throws {
         let exp = expectation(description: "User")
         api.user.getInfo(username: username, success: { response in
             print("\n\(response.realname) (@\(response.name))'s profile:")
@@ -119,10 +119,5 @@ final class LFMKitTests: XCTestCase {
             exp.fulfill()
         }, error: error_callback)
         waitForExpectations(timeout: 5)
-    }*/
-
-    func testExample() throws {
-        print("Hello World")
-        print("Remember to uncomment the code")
     }
 }

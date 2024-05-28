@@ -145,3 +145,14 @@ public struct LFMResponseSession: Decodable {
         self.subscriber = subscriber
     }
 }
+
+public struct LFMError {
+    public let error: Int
+    public let message: String
+
+    public init(error: Int, message: String){
+        self.error = error
+        self.message = message
+    }
+
+}

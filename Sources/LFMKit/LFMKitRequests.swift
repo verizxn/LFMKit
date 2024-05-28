@@ -21,7 +21,7 @@ public struct LFMKitRequests {
         self.api_secret = api_secret
     }
     
-    public func request(method: String, parameters: Parameters, success: @escaping (LFMResponse) -> Void, error: ((Int, String) -> Void)? = nil, requiresSignature: Bool = false, type: HTTPMethod = .get){
+    public func request(method: String, parameters: Parameters, success: @escaping (LFMResponse) -> Void, error: ((LFMError) -> Void)? = nil, requiresSignature: Bool = false, type: HTTPMethod = .get){
         var params = parameters
         params["format"] = "json"
         params["method"] = method
@@ -35,7 +35,7 @@ public struct LFMKitRequests {
                 let response = try JSONDecoder().decode(LFMResponse.self, from: data)
                 if let error_num = response.error, let error_message = response.message {
                     if let e = error {
-                        e(error_num, error_message)
+                        e(LFMError(error: error_num, message: error_message))
                     }
                     return
                 }

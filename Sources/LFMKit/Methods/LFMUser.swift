@@ -13,7 +13,7 @@ public struct LFMUser: LFMClass {
         self.handler = handler
     }
     
-    public func getInfo(username: String, success: @escaping (LFMResponseUser) -> Void, error: ((Int, String) -> Void)? = nil) {
+    public func getInfo(username: String, success: @escaping (LFMResponseUser) -> Void, error: ((LFMError) -> Void)? = nil) {
         handler.request(method: "user.getinfo", parameters: ["username": username], success: { response in
             if let user = response.user {
                 success(user)
@@ -21,7 +21,7 @@ public struct LFMUser: LFMClass {
         }, error: error)
     }
     
-    public func getRecentTracks(username: String, limit: Int, success: @escaping ([LFMResponseTrack]) -> Void, error: ((Int, String) -> Void)? = nil) {
+    public func getRecentTracks(username: String, limit: Int, success: @escaping ([LFMResponseTrack]) -> Void, error: ((LFMError) -> Void)? = nil) {
         handler.request(method: "user.getrecenttracks", parameters: ["user": username, "limit": limit], success: { response in
             if let recenttracks = response.recenttracks {
                 success(recenttracks.track)
@@ -29,7 +29,7 @@ public struct LFMUser: LFMClass {
         }, error: error)
     }
     
-    public func getFriends(username: String, success: @escaping ([LFMResponseUser]) -> Void, error: ((Int, String) -> Void)? = nil){
+    public func getFriends(username: String, success: @escaping ([LFMResponseUser]) -> Void, error: ((LFMError) -> Void)? = nil){
         handler.request(method: "user.getfriends", parameters: ["user": username], success: { response in
             if let friends = response.friends {
                 success(friends.user)
