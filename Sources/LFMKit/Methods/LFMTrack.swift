@@ -131,4 +131,28 @@ public class LFMTrack: LFMClass {
         }, error: error, requiresSignature: true, type: .post)
     }
     
+    /// Love a track for a user profile.
+    /// - Parameters:
+    ///   - track: A track name (utf8 encoded).
+    ///   - artist: An artist name (utf8 encoded).
+    ///   - success: Success function
+    ///   - error: (Optional) Error function (LFMError) -> Void
+    public func love(track: String, artist: String, success: @escaping () -> Void, error: ((LFMError) -> Void)? = nil){
+        handler.request(method: "track.love", parameters: ["track": track, "artist": artist, "sk": session.key], success: { response in
+            success()
+        }, error: error, requiresSignature: true, type: .post)
+    }
+    
+    /// UnLove a track for a user profile.
+    /// - Parameters:
+    ///   - track: A track name (utf8 encoded).
+    ///   - artist: An artist name (utf8 encoded).
+    ///   - success: Success function
+    ///   - error: (Optional) Error function (LFMError) -> Void
+    public func unlove(track: String, artist: String, success: @escaping () -> Void, error: ((LFMError) -> Void)? = nil){
+        handler.request(method: "track.unlove", parameters: ["track": track, "artist": artist, "sk": session.key], success: { response in
+            success()
+        }, error: error, requiresSignature: true, type: .post)
+    }
+    
 }
