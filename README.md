@@ -65,7 +65,7 @@ class ExampleViewController: UIViewController, ASWebAuthenticationPresentationCo
 - Get recent tracks:
 ```swift
 // #TODO: Retrieve the session from previous login
-let session = LFMResponseSession(name: ..., key: ..., subscriber: ...)
+let session = LFMSession(name: ..., key: ..., subscriber: ...)
 lfmsession.setSession(session: session)
 
 let username = lfmsession.session?.name ?? session.name
