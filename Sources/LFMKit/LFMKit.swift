@@ -7,7 +7,7 @@
 
 public class LFMKit {
     public let handler: LFMKitRequests
-    public var session: LFMResponseSession?
+    public var session: LFMSession?
     
     public let user: LFMUser
     public var track: LFMTrack
@@ -27,7 +27,7 @@ public class LFMKit {
     
     /// Sets the session.
     /// - Parameter session: LFMResponseSession(name: String, key: String, subscriber: Int)
-    public func setSession(session: LFMResponseSession){
+    public func setSession(session: LFMSession){
         self.session = session
         user.session = session
         track.session = session

@@ -14,7 +14,7 @@ public struct LFMResponse: Decodable {
     public let friends: LFMResponseFriends?
     public let track: LFMResponseTrackFull?
     public let results: LFMResponseTrackResults?
-    public let session: LFMResponseSession?
+    public let session: LFMSession?
 }
 
 public struct LFMResponseImage: Decodable {
@@ -134,7 +134,7 @@ public struct LFMResponseTrackFull: Decodable {
     public let userloved: String?
 }
 
-public struct LFMResponseSession: Decodable {
+public struct LFMSession: Decodable {
     public let name: String
     public let key: String
     public let subscriber: Int

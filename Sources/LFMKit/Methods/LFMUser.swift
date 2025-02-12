@@ -7,7 +7,7 @@
 
 public class LFMUser: LFMClass {
     public var handler: LFMKitRequests
-    public var session: LFMResponseSession!
+    public var session: LFMSession!
     
     public required init(handler: LFMKitRequests) {
         self.handler = handler

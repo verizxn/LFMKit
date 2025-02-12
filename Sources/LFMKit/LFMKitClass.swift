@@ -7,7 +7,7 @@
 
 public protocol LFMClass {
     var handler: LFMKitRequests { get }
-    var session: LFMResponseSession! { get set }
+    var session: LFMSession! { get set }
     
     init(handler: LFMKitRequests)
 }
