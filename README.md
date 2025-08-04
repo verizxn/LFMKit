@@ -12,7 +12,7 @@ dependencies: [
 
 Usage
 ---
-- [Docs reference wiki](https://github.com/verizxn/LFMKit/wiki)
+- [Docs reference wiki](docs/)
 - [Last.FM API docs](https://www.last.fm/api)
 
 Examples

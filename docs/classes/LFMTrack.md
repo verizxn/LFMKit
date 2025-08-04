@@ -1,0 +1,256 @@
+**CLASS**
+
+# `LFMTrack`
+
+```swift
+public class LFMTrack: LFMRequest
+```
+
+## Methods
+### `getInfo(track:artist:username:success:error:)`
+
+```swift
+public func getInfo(track: String, artist: String, username: String? = nil, success: @escaping (LFMResponseTrackFull) -> Void, error: ((LFMError) -> Void)? = nil)
+```
+
+Get the metadata for a track on Last.fm using the artist/track name.
+- Parameters:
+  - track: The track name.
+  - artist: The artist name.
+  - username: (Optional) The username for the context of the request. If supplied, the user's playcount for this track and whether they have loved the track is included in the response.
+  - success: Success function (LFMResponseTrackFull) -> Void
+  - error: (Optional) Error function (LFMError) -> Void
+
+#### Parameters
+
+| Name | Description |
+| ---- | ----------- |
+| track | The track name. |
+| artist | The artist name. |
+| username | (Optional) The username for the context of the request. If supplied, the user’s playcount for this track and whether they have loved the track is included in the response. |
+| success | Success function (LFMResponseTrackFull) -> Void |
+| error | (Optional) Error function (LFMError) -> Void |
+
+### `getInfo(mbid:username:success:error:)`
+
+```swift
+public func getInfo(mbid: String, username: String? = nil, success: @escaping (LFMResponseTrackFull) -> Void, error: ((LFMError) -> Void)? = nil)
+```
+
+Get the metadata for a track on Last.fm using a musicbrainz id.
+- Parameters:
+  - mbid: The musicbrainz id for the track.
+  - username: (Optional) The username for the context of the request. If supplied, the user's playcount for this track and whether they have loved the track is included in the response.
+  - success: Success function (LFMResponseTrackFull) -> Void
+  - error: (Optional) Error function (LFMError) -> Void
+
+#### Parameters
+
+| Name | Description |
+| ---- | ----------- |
+| mbid | The musicbrainz id for the track. |
+| username | (Optional) The username for the context of the request. If supplied, the user’s playcount for this track and whether they have loved the track is included in the response. |
+| success | Success function (LFMResponseTrackFull) -> Void |
+| error | (Optional) Error function (LFMError) -> Void |
+
+### `search(track:artist:limit:success:error:)`
+
+```swift
+public func search(track: String? = nil, artist: String? = nil, limit: Int = 30, success: @escaping (LFMResponseTrackResults) -> Void, error: ((LFMError) -> Void)? = nil)
+```
+
+Search for a track by track name. Returns track matches sorted by relevance.
+- Parameters:
+  - track: (Optional) The track name.
+  - artist: (Optional) Narrow your search by specifying an artist.
+  - limit: (Optional) The number of results to fetch per page. Defaults to 30.
+  - success: Success function (LFMResponseTrackResults) -> Void
+  - error: (Optional) Error function (LFMError) -> Void
+
+#### Parameters
+
+| Name | Description |
+| ---- | ----------- |
+| track | (Optional) The track name. |
+| artist | (Optional) Narrow your search by specifying an artist. |
+| limit | (Optional) The number of results to fetch per page. Defaults to 30. |
+| success | Success function (LFMResponseTrackResults) -> Void |
+| error | (Optional) Error function (LFMError) -> Void |
+
+### `updateNowPlaying(artist:track:album:success:error:)`
+
+```swift
+public func updateNowPlaying(artist: String, track: String, album: String, success: @escaping () -> Void, error: ((LFMError) -> Void)? = nil)
+```
+
+Used to notify Last.fm that a user has started listening to a track. Parameter names are case sensitive.
+- Parameters:
+  - artist: The artist name.
+  - track: The track name.
+  - album: The album name.
+  - success: Success function
+  - error: (Optional) Error function (LFMError) -> Void
+
+#### Parameters
+
+| Name | Description |
+| ---- | ----------- |
+| artist | The artist name. |
+| track | The track name. |
+| album | The album name. |
+| success | Success function |
+| error | (Optional) Error function (LFMError) -> Void |
+
+### `updateNowPlaying(mbid:success:error:)`
+
+```swift
+public func updateNowPlaying(mbid: String, success: @escaping () -> Void, error: ((LFMError) -> Void)? = nil)
+```
+
+Used to notify Last.fm that a user has started listening to a track. Parameter names are case sensitive.
+- Parameters:
+  - mbid: The MusicBrainz Track ID.
+  - success: Success function
+  - error: (Optional) Error function (LFMError) -> Void
+
+#### Parameters
+
+| Name | Description |
+| ---- | ----------- |
+| mbid | The MusicBrainz Track ID. |
+| success | Success function |
+| error | (Optional) Error function (LFMError) -> Void |
+
+### `scrobble(artist:track:timestamp:album:album_artist:success:error:)`
+
+```swift
+public func scrobble(artist: String, track: String, timestamp: Int, album: String, album_artist: String? = nil, success: @escaping () -> Void, error: ((LFMError) -> Void)? = nil)
+```
+
+Used to add a track-play to a user's profile, scrobble a track.
+- Parameters:
+  - artist: The artist name.
+  - track: The track name.
+  - timestamp: The time the track started playing, in UNIX timestamp format (integer number of seconds since 00:00:00, January 1st 1970 UTC). This must be in the UTC time zone.
+  - album: The album name.
+  - album_artist: The album artist - if this differs from the track artist.
+  - success: Success function
+  - error: (Optional) Error function (LFMError) -> Void
+
+#### Parameters
+
+| Name | Description |
+| ---- | ----------- |
+| artist | The artist name. |
+| track | The track name. |
+| timestamp | The time the track started playing, in UNIX timestamp format (integer number of seconds since 00:00:00, January 1st 1970 UTC). This must be in the UTC time zone. |
+| album | The album name. |
+| album_artist | The album artist - if this differs from the track artist. |
+| success | Success function |
+| error | (Optional) Error function (LFMError) -> Void |
+
+### `scrobble(mbid:success:error:)`
+
+```swift
+public func scrobble(mbid: String, success: @escaping () -> Void, error: ((LFMError) -> Void)? = nil)
+```
+
+Used to add a track-play to a user's profile, scrobble a track.
+- Parameters:
+  - mbid: The MusicBrainz Track ID.
+  - success: Success function
+  - error: (Optional) Error function (LFMError) -> Void
+
+#### Parameters
+
+| Name | Description |
+| ---- | ----------- |
+| mbid | The MusicBrainz Track ID. |
+| success | Success function |
+| error | (Optional) Error function (LFMError) -> Void |
+
+### `love(track:artist:success:error:)`
+
+```swift
+public func love(track: String, artist: String, success: @escaping () -> Void, error: ((LFMError) -> Void)? = nil)
+```
+
+Love a track for a user profile.
+- Parameters:
+  - track: A track name (utf8 encoded).
+  - artist: An artist name (utf8 encoded).
+  - success: Success function
+  - error: (Optional) Error function (LFMError) -> Void
+
+#### Parameters
+
+| Name | Description |
+| ---- | ----------- |
+| track | A track name (utf8 encoded). |
+| artist | An artist name (utf8 encoded). |
+| success | Success function |
+| error | (Optional) Error function (LFMError) -> Void |
+
+### `unlove(track:artist:success:error:)`
+
+```swift
+public func unlove(track: String, artist: String, success: @escaping () -> Void, error: ((LFMError) -> Void)? = nil)
+```
+
+UnLove a track for a user profile.
+- Parameters:
+  - track: A track name (utf8 encoded).
+  - artist: An artist name (utf8 encoded).
+  - success: Success function
+  - error: (Optional) Error function (LFMError) -> Void
+
+#### Parameters
+
+| Name | Description |
+| ---- | ----------- |
+| track | A track name (utf8 encoded). |
+| artist | An artist name (utf8 encoded). |
+| success | Success function |
+| error | (Optional) Error function (LFMError) -> Void |
+
+### `getTopTags(track:artist:success:error:)`
+
+```swift
+public func getTopTags(track: String, artist: String, success: @escaping () -> Void, error: ((LFMError) -> Void)? = nil)
+```
+
+Get the top tags for this track on Last.fm, ordered by tag count. Supply either track & artist name or mbid.
+- Parameters:
+  - track: The track name.
+  - artist: The artist name.
+  - success: Success function
+  - error: (Optional) Error function (LFMError) -> Void
+
+#### Parameters
+
+| Name | Description |
+| ---- | ----------- |
+| track | The track name. |
+| artist | The artist name. |
+| success | Success function |
+| error | (Optional) Error function (LFMError) -> Void |
+
+### `getTopTags(mbid:artist:success:error:)`
+
+```swift
+public func getTopTags(mbid: String, artist: String, success: @escaping () -> Void, error: ((LFMError) -> Void)? = nil)
+```
+
+Get the top tags for this track on Last.fm, ordered by tag count. Supply either track & artist name or mbid.
+- Parameters:
+  - mbid: The musicbrainz id for the track.
+  - success: Success function
+  - error: (Optional) Error function (LFMError) -> Void
+
+#### Parameters
+
+| Name | Description |
+| ---- | ----------- |
+| mbid | The musicbrainz id for the track. |
+| success | Success function |
+| error | (Optional) Error function (LFMError) -> Void |
