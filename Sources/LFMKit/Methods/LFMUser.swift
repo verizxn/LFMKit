@@ -5,21 +5,14 @@
 //  Created by verizxn on 26/05/24.
 //
 
-public class LFMUser: LFMClass {
-    public var handler: LFMKitRequests
-    public var session: LFMSession!
-    
-    public required init(handler: LFMKitRequests) {
-        self.handler = handler
-    }
-    
+public class LFMUser: LFMRequest {
     /// Get information about a user profile.
     /// - Parameters:
     ///   - username: The user to fetch info for. Defaults to the authenticated user.
     ///   - success: Success function (LFMResponseUser) -> Void
     ///   - error: (Optional) Error function (LFMError) -> Void
     public func getInfo(username: String, success: @escaping (LFMResponseUser) -> Void, error: ((LFMError) -> Void)? = nil) {
-        handler.request(method: "user.getinfo", parameters: ["username": username], success: { response in
+        self.request(method: "user.getinfo", parameters: ["username": username], success: { response in
             guard let user = response.user else {
                 error?(LFMError(error: -1, message: "Error: user.getinfo."))
                 return
@@ -50,7 +43,7 @@ public class LFMUser: LFMClass {
             params["to"] = to
         }
         
-        handler.request(method: "user.getrecenttracks", parameters: params, success: { response in
+        self.request(method: "user.getrecenttracks", parameters: params, success: { response in
             guard let recenttracks = response.recenttracks else {
                 error?(LFMError(error: -1, message: "Error: user.getrecenttracks."))
                 return
@@ -65,7 +58,7 @@ public class LFMUser: LFMClass {
     ///   - success: Success function ([LFMResponseUser]) -> Void
     ///   - error: (Optional) Error function (LFMError) -> Void
     public func getFriends(username: String, success: @escaping ([LFMResponseUser]) -> Void, error: ((LFMError) -> Void)? = nil){
-        handler.request(method: "user.getfriends", parameters: ["user": username], success: { response in
+        self.request(method: "user.getfriends", parameters: ["user": username], success: { response in
             guard let friends = response.friends else {
                 error?(LFMError(error: -1, message: "Error: user.getfriends."))
                 return

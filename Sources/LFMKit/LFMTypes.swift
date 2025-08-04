@@ -1,9 +1,14 @@
 //
-//  LFMResponse.swift
+//  LFMTypes.swift
 //  LFMKit
 //
 //  Created by verizxn on 26/05/24.
 //
+
+public struct LFMKeys {
+    public let api_key: String
+    public let api_secret: String
+}
 
 public struct LFMResponse: Decodable {
     public let error: Int?
@@ -94,7 +99,7 @@ public struct LFMResponseUser: Decodable {
     public let track_count: String?
     public let album_count: String?
     public let image: [LFMResponseImage]
-    //public let registered: [String: String]
+//    public let registered: [String: String]
     public let country: String
     public let gender: String?
     public let url: String
@@ -149,10 +154,9 @@ public struct LFMSession: Decodable {
 public struct LFMError {
     public let error: Int
     public let message: String
-
+    
     public init(error: Int, message: String){
         self.error = error
         self.message = message
     }
-
 }

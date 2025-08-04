@@ -5,14 +5,7 @@
 //  Created by verizxn on 26/05/24.
 //
 
-public class LFMTrack: LFMClass {
-    public var handler: LFMKitRequests
-    public var session: LFMSession!
-    
-    public required init(handler: LFMKitRequests) {
-        self.handler = handler
-    }
-    
+public class LFMTrack: LFMRequest {
     /// Get the metadata for a track on Last.fm using the artist/track name.
     /// - Parameters:
     ///   - track: The track name.
@@ -26,7 +19,7 @@ public class LFMTrack: LFMClass {
             params["username"] = user
         }
         
-        handler.request(method: "track.getinfo", parameters: params, success: { response in
+        self.request(method: "track.getinfo", parameters: params, success: { response in
             guard let track = response.track else {
                 error?(LFMError(error: -1, message: "Error: track.getinfo."))
                 return
@@ -47,7 +40,7 @@ public class LFMTrack: LFMClass {
             params["username"] = user
         }
         
-        handler.request(method: "track.getinfo", parameters: params, success: { response in
+        self.request(method: "track.getinfo", parameters: params, success: { response in
             guard let track = response.track else {
                 error?(LFMError(error: -1, message: "Error: track.getinfo."))
                 return
@@ -72,7 +65,7 @@ public class LFMTrack: LFMClass {
             params["artist"] = artist
         }
         
-        handler.request(method: "track.search", parameters: params, success: { response in
+        self.request(method: "track.search", parameters: params, success: { response in
             guard let results = response.results else {
                 error?(LFMError(error: -1, message: "Error: track.search."))
                 return
@@ -89,7 +82,7 @@ public class LFMTrack: LFMClass {
     ///   - success: Success function
     ///   - error: (Optional) Error function (LFMError) -> Void
     public func updateNowPlaying(artist: String, track: String, album: String, success: @escaping () -> Void, error: ((LFMError) -> Void)? = nil){
-        handler.request(method: "track.updatenowplaying", parameters: ["artist": artist, "track": track, "album": album, "sk": session.key], success: { _ in
+        self.request(method: "track.updatenowplaying", parameters: ["artist": artist, "track": track, "album": album, "sk": session.key], success: { _ in
             success()
         }, error: error, requiresSignature: true, type: .post)
     }
@@ -100,7 +93,7 @@ public class LFMTrack: LFMClass {
     ///   - success: Success function
     ///   - error: (Optional) Error function (LFMError) -> Void
     public func updateNowPlaying(mbid: String, success: @escaping () -> Void, error: ((LFMError) -> Void)? = nil){
-        handler.request(method: "track.updatenowplaying", parameters: ["mbid": mbid, "sk": session.key], success: { _ in
+        self.request(method: "track.updatenowplaying", parameters: ["mbid": mbid, "sk": session.key], success: { _ in
             success()
         }, error: error, requiresSignature: true, type: .post)
     }
@@ -115,7 +108,7 @@ public class LFMTrack: LFMClass {
     ///   - success: Success function
     ///   - error: (Optional) Error function (LFMError) -> Void
     public func scrobble(artist: String, track: String, timestamp: Int, album: String, album_artist: String? = nil, success: @escaping () -> Void, error: ((LFMError) -> Void)? = nil){
-        handler.request(method: "track.scrobble", parameters: ["artist": artist, "track": track, "timestamp": timestamp, "album": album, "albumArtist": album_artist ?? artist, "sk": session.key], success: { response in
+        self.request(method: "track.scrobble", parameters: ["artist": artist, "track": track, "timestamp": timestamp, "album": album, "albumArtist": album_artist ?? artist, "sk": session.key], success: { response in
             success()
         }, error: error, requiresSignature: true, type: .post)
     }
@@ -126,7 +119,7 @@ public class LFMTrack: LFMClass {
     ///   - success: Success function
     ///   - error: (Optional) Error function (LFMError) -> Void
     public func scrobble(mbid: String, success: @escaping () -> Void, error: ((LFMError) -> Void)? = nil){
-        handler.request(method: "track.scrobble", parameters: ["mbid": mbid, "sk": session.key], success: { response in
+        self.request(method: "track.scrobble", parameters: ["mbid": mbid, "sk": session.key], success: { response in
             success()
         }, error: error, requiresSignature: true, type: .post)
     }
@@ -138,7 +131,7 @@ public class LFMTrack: LFMClass {
     ///   - success: Success function
     ///   - error: (Optional) Error function (LFMError) -> Void
     public func love(track: String, artist: String, success: @escaping () -> Void, error: ((LFMError) -> Void)? = nil){
-        handler.request(method: "track.love", parameters: ["track": track, "artist": artist, "sk": session.key], success: { response in
+        self.request(method: "track.love", parameters: ["track": track, "artist": artist, "sk": session.key], success: { response in
             success()
         }, error: error, requiresSignature: true, type: .post)
     }
@@ -150,9 +143,32 @@ public class LFMTrack: LFMClass {
     ///   - success: Success function
     ///   - error: (Optional) Error function (LFMError) -> Void
     public func unlove(track: String, artist: String, success: @escaping () -> Void, error: ((LFMError) -> Void)? = nil){
-        handler.request(method: "track.unlove", parameters: ["track": track, "artist": artist, "sk": session.key], success: { response in
+        self.request(method: "track.unlove", parameters: ["track": track, "artist": artist, "sk": session.key], success: { response in
             success()
         }, error: error, requiresSignature: true, type: .post)
+    }
+    
+    /// Get the top tags for this track on Last.fm, ordered by tag count. Supply either track & artist name or mbid.
+    /// - Parameters:
+    ///   - track: The track name.
+    ///   - artist: The artist name.
+    ///   - success: Success function
+    ///   - error: (Optional) Error function (LFMError) -> Void
+    public func getTopTags(track: String, artist: String, success: @escaping () -> Void, error: ((LFMError) -> Void)? = nil){
+        self.request(method: "track.getTopTags", parameters: ["track": track, "artist": artist, "sk": session.key], success: { response in
+            success()
+        }, error: error)
+    }
+    
+    /// Get the top tags for this track on Last.fm, ordered by tag count. Supply either track & artist name or mbid.
+    /// - Parameters:
+    ///   - mbid: The musicbrainz id for the track.
+    ///   - success: Success function
+    ///   - error: (Optional) Error function (LFMError) -> Void
+    public func getTopTags(mbid: String, artist: String, success: @escaping () -> Void, error: ((LFMError) -> Void)? = nil){
+        self.request(method: "track.getTopTags", parameters: ["mbid": mbid, "sk": session.key], success: { response in
+            success()
+        }, error: error)
     }
     
 }

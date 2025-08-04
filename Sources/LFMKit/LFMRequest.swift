@@ -1,5 +1,5 @@
 //
-//  LFMKitRequests.swift
+//  LFMRequest.swift
 //  LFMKit
 //
 //  Created by verizxn on 26/05/24.
@@ -10,27 +10,26 @@ import Foundation
 import Alamofire
 import SwiftHash
 
-public struct LFMKitRequests {
-    public let api_key: String
-    public let api_secret: String
+public class LFMRequest {
+    internal let keys: LFMKeys
+    public var session: LFMSession!
     
-    public let ENDPOINT = "https://ws.audioscrobbler.com/2.0/"
+    private let endpoint = "https://ws.audioscrobbler.com/2.0/"
     
-    public init(api_key: String, api_secret: String) {
-        self.api_key = api_key
-        self.api_secret = api_secret
+    public init(keys: LFMKeys) {
+        self.keys = keys
     }
     
     public func request(method: String, parameters: Parameters, success: @escaping (LFMResponse) -> Void, error: ((LFMError) -> Void)? = nil, requiresSignature: Bool = false, type: HTTPMethod = .get){
         var params = parameters
         params["format"] = "json"
         params["method"] = method
-        params["api_key"] = api_key
+        params["api_key"] = keys.api_key
         if requiresSignature {
             params["api_sig"] = generateSignature(params: params)
         }
         
-        AF.request(ENDPOINT, method: type, parameters: params).response { response in
+        AF.request(endpoint, method: type, parameters: params).response { response in
             if let e = response.error {
                 error?(LFMError(error: -1, message: e.errorDescription ?? "Could not perform the request."))
                 return
@@ -54,12 +53,12 @@ public struct LFMKitRequests {
         }
     }
     
-    public func generateSignature(params: Parameters) -> String {
+    internal func generateSignature(params: Parameters) -> String {
         var keys = params
         keys["format"] = nil
         
         let sorted = keys.sorted(by: { $0.0 < $1.0 })
-        let signature = sorted.compactMap { "\($0)\($1)" }.joined() + api_secret
+        let signature = sorted.compactMap { "\($0)\($1)" }.joined() + self.keys.api_secret
         
         return MD5(signature)
     }
