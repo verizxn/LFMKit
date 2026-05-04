@@ -5,7 +5,9 @@
 //  Created by verizxn on 26/05/24.
 //
 
-public class LFMKit {
+import Combine
+
+public class LFMKit: ObservableObject {
     internal var _session: LFMSession?
     public var session: LFMSession? {
         get {
@@ -40,5 +42,6 @@ public class LFMKit {
         user.session = session
         track.session = session
         auth.session = session
+        objectWillChange.send()
     }
 }

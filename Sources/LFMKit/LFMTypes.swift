@@ -10,7 +10,7 @@ public struct LFMKeys {
     public let api_secret: String
 }
 
-public struct LFMResponse: Decodable {
+public struct LFMResponse: Codable {
     public let error: Int?
     public let message: String?
     
@@ -22,7 +22,7 @@ public struct LFMResponse: Decodable {
     public let session: LFMSession?
 }
 
-public struct LFMResponseImage: Decodable {
+public struct LFMResponseImage: Codable {
     public let size: String
     public let text: String
     
@@ -32,7 +32,7 @@ public struct LFMResponseImage: Decodable {
     }
 }
 
-public struct LFMResponseMB: Decodable {
+public struct LFMResponseMB: Codable {
     public let mbid: String?
     public let text: String?
     public let name: String?
@@ -46,7 +46,7 @@ public struct LFMResponseMB: Decodable {
     }
 }
 
-public struct LFMResponseDate: Decodable {
+public struct LFMResponseDate: Codable {
     public let uts: String
     public let text: String
     
@@ -56,18 +56,18 @@ public struct LFMResponseDate: Decodable {
     }
 }
 
-public struct LFMResponseAlbum: Decodable {
+public struct LFMResponseAlbum: Codable {
     public let artist: String
     public let title: String
     public let url: String
     public let image: [LFMResponseImage]
 }
 
-public struct LFMResponseTracks: Decodable {
+public struct LFMResponseTracks: Codable {
     public let track: [LFMResponseTrack]
 }
 
-public struct LFMResponseTrackResults: Decodable {
+public struct LFMResponseTrackResults: Codable {
     public let totalResults: String
     public let startIndex: String
     public let itemsPerPage: String
@@ -81,15 +81,15 @@ public struct LFMResponseTrackResults: Decodable {
     }
 }
 
-public struct LFMResponseTrackMatches: Decodable {
+public struct LFMResponseTrackMatches: Codable {
     public let track: [LFMResponseTrackMatch]
 }
 
-public struct LFMResponseFriends: Decodable {
+public struct LFMResponseFriends: Codable {
     public let user: [LFMResponseUser]
 }
 
-public struct LFMResponseUser: Decodable {
+public struct LFMResponseUser: Codable {
     public let name: String
     public let subscriber: String
     public let realname: String
@@ -106,7 +106,7 @@ public struct LFMResponseUser: Decodable {
     public let type: String
 }
 
-public struct LFMResponseTrack: Decodable {
+public struct LFMResponseTrack: Codable {
     public let artist: LFMResponseMB
     public let streamable: String
     public let image: [LFMResponseImage]
@@ -117,7 +117,7 @@ public struct LFMResponseTrack: Decodable {
     public let date: LFMResponseDate?
 }
 
-public struct LFMResponseTrackMatch: Decodable {
+public struct LFMResponseTrackMatch: Codable {
     public let name: String
     public let artist: String
     public let url: String
@@ -127,7 +127,7 @@ public struct LFMResponseTrackMatch: Decodable {
     public let mbid: String
 }
 
-public struct LFMResponseTrackFull: Decodable {
+public struct LFMResponseTrackFull: Codable {
     public let name: String
     public let url: String
     public let duration: String
@@ -139,7 +139,7 @@ public struct LFMResponseTrackFull: Decodable {
     public let userloved: String?
 }
 
-public struct LFMSession: Decodable {
+public struct LFMSession: Codable {
     public let name: String
     public let key: String
     public let subscriber: Int
@@ -151,7 +151,7 @@ public struct LFMSession: Decodable {
     }
 }
 
-public struct LFMError {
+public struct LFMError: Codable {
     public let error: Int
     public let message: String
     
