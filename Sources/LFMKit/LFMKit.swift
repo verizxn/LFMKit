@@ -14,9 +14,7 @@ public class LFMKit: ObservableObject {
             _session
         }
         set {
-            if let newSession = newValue {
-                self.setSession(session: newSession)
-            }
+            self.setSession(session: newValue)
         }
     }
     
@@ -36,8 +34,8 @@ public class LFMKit: ObservableObject {
     }
     
     /// Sets the session.
-    /// - Parameter session: LFMResponseSession(name: String, key: String, subscriber: Int)
-    public func setSession(session: LFMSession){
+    /// - Parameter session: (Optional) LFMResponseSession(name: String, key: String, subscriber: Int)
+    public func setSession(session: LFMSession?){
         self._session = session
         user.session = session
         track.session = session
